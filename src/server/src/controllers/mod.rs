@@ -16,7 +16,6 @@ pub async fn healthcheck() -> impl Responder {
     HttpResponse::Ok().json(response)
 }
 
-
 pub async fn not_found() -> Result<HttpResponse> {
     let response = Response {
         message: "Resource not found".to_string(),

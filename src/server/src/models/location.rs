@@ -8,5 +8,5 @@ pub struct Location {
     pub id: i32,
     pub state: String,
     pub acronym: String,
-    pub county: String,
+    pub country: String,
 }

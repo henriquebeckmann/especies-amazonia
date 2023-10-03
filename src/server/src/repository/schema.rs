@@ -8,7 +8,7 @@ diesel::table! {
         #[max_length = 2]
         acronym -> Bpchar,
         #[max_length = 100]
-        county -> Varchar,
+        country -> Varchar,
     }
 }
 
@@ -19,7 +19,7 @@ diesel::table! {
         #[max_length = 100]
         title -> Varchar,
         imageurl -> Varchar,
-        datepicture -> Nullable<Date>,
+        datepicture -> Nullable<Timestamp>,
         #[max_length = 255]
         description -> Nullable<Varchar>,
         #[max_length = 100]

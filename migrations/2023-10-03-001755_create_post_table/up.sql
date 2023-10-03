@@ -3,14 +3,14 @@ CREATE TABLE location (
     id SERIAL PRIMARY KEY,
     state VARCHAR(100) NOT NULL,
     acronym CHAR(2) NOT NULL,
-    county VARCHAR(100) NOT NULL
+    country VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE post (
     id VARCHAR(255) PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     imageUrl VARCHAR NOT NULL,
-    datePicture DATE,
+    datePicture TIMESTAMP,
     description VARCHAR(255),
     family VARCHAR(100),
     gender VARCHAR(100),
