@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam defaultFontName Droid Sans
+skinparam linetype ortho
+skinparam nodesep 50
+set separator none
+skinparam struct {
+  BackgroundColor White
+    BackgroundColor<<Settings>> Wheat
+}
+
+package "Espécies da Amazônia" <<Frame>> {
+  struct Post {
+    - id: String {PK}
+    - title: String(100) NOT NULL
+    - imageUrl: String NOT NULL
+    - datePicture: LocalDate
+    - description: String
+    - family: String(100)
+    - gender: String(100)
+    - specie: String(100)
+    - location: Int {FK} NOT NULL
+    - locality: String(100) NOT NULL
+    - verified: Boolean NOT NULL
+    - publishedAt: LocalDateTime NOT NULL
+  }
+
+  struct Location {
+    - id: Int {PK}
+    - state: String(100) NOT NULL
+    - acronym: String(2) NOT NULL
+    - county: String(100) NOT NULL
+  }
+
+  Post "1" --> "1" Location : has
+}
+
+@enduml
