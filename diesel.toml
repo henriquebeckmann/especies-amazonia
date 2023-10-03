@@ -2,33 +2,8 @@
 # see https://diesel.rs/guides/configuring-diesel-cli
 
 [print_schema]
-file = "src/repository/schema.rs"
+file = "src/server/src/repository/schema.rs"
 custom_type_derives = ["diesel::query_builder::QueryId"]
 
 [migrations_directory]
 dir = "migrations"
-
-
-  class Post {
-    - id: String {PK}
-    - title: String(100) NOT NULL
-    - imageUrl: String NOT NULL
-    - datePicture: LocalDate
-    - description: String
-    - family: String(100)
-    - gender: String(100)
-    - specie: String(100)
-    - location: Int {FK} NOT NULL
-    - locality: String(100) NOT NULL
-    - verified: Boolean NOT NULL
-    - publishedAt: LocalDateTime NOT NULL
-  }
-
-  class Locations {
-    - id: Int {PK}
-    - state: String(100) NOT NULL
-    - acronym: String(2) NOT NULL
-    - county: String(100) NOT NULL
-  }
-
-  Post "1" -- "0..*" Locations : has
