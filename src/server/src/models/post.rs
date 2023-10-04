@@ -2,13 +2,13 @@ use diesel::{AsChangeset, Insertable, Queryable};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone, Queryable, Insertable, AsChangeset)]
-#[diesel(table_name = crate::repository::schema::post)]
+#[diesel(table_name = crate::repository::schema::posts)]
 pub struct Post {
     #[serde(default)]
     pub id: String,
     pub title: String,
-    pub imageurl: String,
-    pub datepicture: Option<chrono::NaiveDateTime>,
+    pub image_url: String,
+    pub date_picture: Option<chrono::NaiveDateTime>,
     pub description: Option<String>,
     pub family: Option<String>,
     pub gender: Option<String>,
@@ -16,5 +16,6 @@ pub struct Post {
     pub location: i32,
     pub locality: String,
     pub verified: bool,
-    pub publishedat: chrono::NaiveDateTime,
+    pub published_at: chrono::NaiveDateTime,
+    pub updated_at: chrono::NaiveDateTime,
 }

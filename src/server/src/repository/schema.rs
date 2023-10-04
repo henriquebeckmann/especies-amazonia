@@ -1,25 +1,25 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
-    location (id) {
+    locations (id) {
         id -> Int4,
-        #[max_length = 100]
-        state -> Varchar,
+        #[max_length = 255]
+        state_name -> Varchar,
         #[max_length = 2]
-        acronym -> Bpchar,
-        #[max_length = 100]
-        country -> Varchar,
+        state_abbreviation -> Bpchar,
+        #[max_length = 255]
+        city -> Varchar,
     }
 }
 
 diesel::table! {
-    post (id) {
+    posts (id) {
         #[max_length = 255]
         id -> Varchar,
         #[max_length = 100]
         title -> Varchar,
-        imageurl -> Varchar,
-        datepicture -> Nullable<Timestamp>,
+        image_url -> Varchar,
+        date_picture -> Nullable<Timestamp>,
         #[max_length = 255]
         description -> Nullable<Varchar>,
         #[max_length = 100]
@@ -32,13 +32,14 @@ diesel::table! {
         #[max_length = 100]
         locality -> Varchar,
         verified -> Bool,
-        publishedat -> Timestamp,
+        published_at -> Timestamp,
+        updated_at -> Timestamp,
     }
 }
 
-diesel::joinable!(post -> location (location));
+diesel::joinable!(posts -> locations (location));
 
 diesel::allow_tables_to_appear_in_same_query!(
-    location,
-    post,
+    locations,
+    posts,
 );
