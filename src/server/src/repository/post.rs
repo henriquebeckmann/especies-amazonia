@@ -1,3 +1,4 @@
+use std::fmt::Error;
 use chrono::Utc;
 use diesel::prelude::*;
 
@@ -18,6 +19,22 @@ impl Database {
             .expect("Error loading post by id");
 
         Some(post)
+    }
+
+    pub fn create_post(&self, post: Post) -> Result<Post, Error> {
+        let post = Post  {
+            id: uuid::Uuid::new_v4().to_string(),
+            published_at: Utc::now().naive_utc(),
+            updated_at: Utc::now().naive_utc(),
+            ..post
+        };
+
+        diesel::insert_into(posts)
+            .values(&post)
+            .execute(&mut self.pool.get().unwrap())
+            .expect("Error creating new post");
+
+            Ok(post)
     }
 
     pub fn update_post_by_id(&self, post_id: &str, mut post: Post) -> Option<Post> {

@@ -1,4 +1,4 @@
-use actix_web::{get, put, delete, web, HttpResponse};
+use actix_web::{get, post, put, delete, web, HttpResponse};
 
 use crate::repository::database::Database;
 use crate::models::post::Post;
@@ -17,6 +17,16 @@ async fn get_posts_by_id(db: web::Data<Database>, id: web::Path<String>) -> Http
     match post {
         Some(post) => HttpResponse::Ok().json(post),
         None => HttpResponse::NotFound().body("Post not found")
+    }
+}
+
+#[post("/posts")]
+async fn create_post(db: web::Data<Database>, new_post: web::Json<Post>) -> HttpResponse {
+    let post = db.create_post(new_post.into_inner());
+
+    match post {
+        Ok(post) => HttpResponse::Ok().json(post),
+        Err(err) => HttpResponse::InternalServerError().body(err.to_string())
     }
 }
 
