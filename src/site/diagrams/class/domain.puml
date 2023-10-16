@@ -1,4 +1,4 @@
-@startuml
+@startuml "domain"
 'https://plantuml.com/class-diagram
 
 skinparam defaultFontName Droid Sans
@@ -14,71 +14,44 @@ package "Espécies da Amazônia" <<Frame>> {
   class Post {
     - id: String {PK}
     ---
-    - title: String(100) NOT NULL
-    - image_url: String NOT NULL
-    - date_picture: LocalDate
+    - title: String(50) NOT NULL
     - popular_name: String(100)
     - description: String
+    - image_url: String NOT NULL
+    - date_picture: LocalDate
     - verified: Boolean NOT NULL
-    - published_at: LocalDateTime NOT NULL
     - updated_at: LocalDateTime NOT NULL
+    - published_at: LocalDateTime NOT NULL
     - specie: Int {FK}
-    - locality: Int {FK}
-  }
-
-  class Locality {
-    - id: Int {PK}
-    ---
-    - name: String(100)
-    - city: Int {FK}
-  }
-
-  class family {
-    - id: Int {PK}
-    ---
-    - name: String(100)
-  }
-
-  class gender {
-    - id: Int {PK}
-    ---
-    - name: String(100)
-    - family: Int {FK}
+    - locality: Int {FK} NOT NULL
   }
 
   class Specie {
     - id: Int {PK}
     ---
     - name: String(100)
-    - gender: Int {FK}
+    - gender: String(100)
+    - family: String(100)
+  }
+  
+  class Locality {
+    - id: Int {PK}
+    ---
+    - name: String(100)
+    - Location: Int {FK}
   }
 
-  class User {}
+  class Location <<Settings>> {
+  - id: Int {PK}
+  ---
+  - state: String(100) Unique
+  - abbreviation: String(2)
+  - city: String(100)
+  }
 
   Post }o-- Specie : Contains
-  Post }o-- User
-  gender }o-- family : Belongs To
-  Specie }o-- gender : Is Of
-}
-
-database {
-    class State <<Settings>> {
-      - id: Int {PK}
-      ---
-      - name: String(100)
-      - abbreviation: String(2)
-    }
-
-    class City <<Settings>> {
-      - id: Int {PK}
-      ---
-      - name: String(100)
-      - state: Int {FK}
-    }
-
-  Post }o-l- Locality : Located In
-  City }o-- State : Belongs To
-  Locality }o-- City : Is In
+  Post }o-- Locality : Located In
+  Locality }o-- Location : Is In
 }
 
 @enduml

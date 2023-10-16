@@ -1,6 +1,7 @@
 use actix_web::{get, HttpResponse, Responder, Result};
 use serde::Serialize;
 
+pub mod form;
 pub mod post;
 
 #[derive(Serialize)]

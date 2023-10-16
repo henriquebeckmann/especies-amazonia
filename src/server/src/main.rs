@@ -5,7 +5,7 @@ mod controllers;
 mod models;
 mod repository;
 
-use controllers::{healthcheck, not_found, post};
+use controllers::{form, healthcheck, not_found, post};
 use repository::database::Database;
 
 #[actix_web::main]
@@ -20,6 +20,7 @@ pub async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(app_data.clone())
             .service(healthcheck)
+            .service(form::post)
             .service(web::scope("/api/v1").configure(post::config))
             .default_service(web::route().to(not_found))
             .wrap(actix_web::middleware::Logger::default())
@@ -27,5 +28,4 @@ pub async fn main() -> std::io::Result<()> {
     .bind(("127.0.0.1", 8080))?
     .run()
     .await
-
 }

@@ -39,7 +39,4 @@ diesel::table! {
 
 diesel::joinable!(posts -> locations (location));
 
-diesel::allow_tables_to_appear_in_same_query!(
-    locations,
-    posts,
-);
+diesel::allow_tables_to_appear_in_same_query!(locations, posts,);

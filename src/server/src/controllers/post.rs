@@ -1,7 +1,7 @@
-use actix_web::{get, post, put, delete, web, HttpResponse};
+use actix_web::{delete, get, post, put, web, HttpResponse};
 
-use crate::repository::database::Database;
 use crate::models::post::Post;
+use crate::repository::database::Database;
 
 #[get("/posts")]
 async fn get_posts(db: web::Data<Database>) -> HttpResponse {
@@ -16,7 +16,7 @@ async fn get_posts_by_id(db: web::Data<Database>, id: web::Path<String>) -> Http
 
     match post {
         Some(post) => HttpResponse::Ok().json(post),
-        None => HttpResponse::NotFound().body("Post not found")
+        None => HttpResponse::NotFound().body("Post not found"),
     }
 }
 
@@ -26,17 +26,21 @@ async fn create_post(db: web::Data<Database>, new_post: web::Json<Post>) -> Http
 
     match post {
         Ok(post) => HttpResponse::Ok().json(post),
-        Err(err) => HttpResponse::InternalServerError().body(err.to_string())
+        Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
     }
 }
 
 #[put("/posts/{id}")]
-async fn update_post_by_id(db: web::Data<Database>, id: web::Path<String>, updated_post: web::Json<Post>) -> HttpResponse {
+async fn update_post_by_id(
+    db: web::Data<Database>,
+    id: web::Path<String>,
+    updated_post: web::Json<Post>,
+) -> HttpResponse {
     let post = db.update_post_by_id(&id, updated_post.into_inner());
 
     match post {
         Some(post) => HttpResponse::Ok().json(post),
-        None => HttpResponse::NotFound().body("Post not found")
+        None => HttpResponse::NotFound().body("Post not found"),
     }
 }
 
@@ -46,7 +50,7 @@ async fn delete_post_by_id(db: web::Data<Database>, id: web::Path<String>) -> Ht
 
     match post {
         Some(_) => HttpResponse::Ok().finish(),
-        None => HttpResponse::NotFound().body("Post not found")
+        None => HttpResponse::NotFound().body("Post not found"),
     }
 }
 

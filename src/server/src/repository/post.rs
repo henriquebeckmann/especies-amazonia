@@ -1,6 +1,6 @@
-use std::fmt::Error;
 use chrono::Utc;
 use diesel::prelude::*;
+use std::fmt::Error;
 
 use crate::models::post::Post;
 use crate::repository::database::Database;
@@ -8,7 +8,8 @@ use crate::repository::schema::posts::dsl::*;
 
 impl Database {
     pub fn get_posts(&self) -> Vec<Post> {
-        posts.load::<Post>(&mut self.pool.get().unwrap())
+        posts
+            .load::<Post>(&mut self.pool.get().unwrap())
             .expect("Error loading all posts")
     }
 
@@ -22,7 +23,7 @@ impl Database {
     }
 
     pub fn create_post(&self, post: Post) -> Result<Post, Error> {
-        let post = Post  {
+        let post = Post {
             id: uuid::Uuid::new_v4().to_string(),
             published_at: Utc::now().naive_utc(),
             updated_at: Utc::now().naive_utc(),
@@ -34,7 +35,7 @@ impl Database {
             .execute(&mut self.pool.get().unwrap())
             .expect("Error creating new post");
 
-            Ok(post)
+        Ok(post)
     }
 
     pub fn update_post_by_id(&self, post_id: &str, mut post: Post) -> Option<Post> {
